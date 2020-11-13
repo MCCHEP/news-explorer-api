@@ -4,6 +4,7 @@
 ## Адреса для подключения
 
 Api:
+
 https://api.news-explorer-mc.ru/
 
 Будущий фронтенд:
