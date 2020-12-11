@@ -28,9 +28,12 @@ mongoose.connect('mongodb://localhost:27017/newsexplorerdb', {
   useUnifiedTopology: true,
 });
 
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true,
+}));
 app.use(limiter);
 app.use(helmet());
-app.use(cors());
 app.listen(PORT);
 app.use(cookieParser());
 app.use(bodyParser.json());

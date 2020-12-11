@@ -56,14 +56,14 @@ module.exports.loginUser = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       if (!user) {
-        return next(new AuthorizationError('Неправильные почта или пароль'));
+        throw new AuthorizationError('Неправильные почта или пароль');
       }
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
-      return res
-        .cookie('jwt', token, {
-          maxAge: 3600000 * 24 * 7,
-          httpOnly: true,
-        }).end();
+
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', {
+        expiresIn: '7d',
+      });
+
+      return res.send({ token });
     })
     .catch(next);
 };
