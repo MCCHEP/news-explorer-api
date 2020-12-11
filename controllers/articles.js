@@ -4,7 +4,7 @@ const RightsError = require('../errors/rights-err');
 const BadRequestError = require('../errors/bad-request-err');
 
 module.exports.getArticles = (req, res, next) => {
-  Article.find({})
+  Article.find({ owner: req.user })
     .then((articles) => {
       if (!articles) {
         return next(new NotFoundError('Пока еще нет статей'));
